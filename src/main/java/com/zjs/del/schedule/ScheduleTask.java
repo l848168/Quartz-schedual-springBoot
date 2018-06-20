@@ -10,7 +10,6 @@ import com.zjs.del.utils.DateUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
@@ -74,7 +73,7 @@ public class ScheduleTask {
     }
 
 
-    /** 定时删除纠错地址表七天前的数据*/
+    /** 定时删除纠错地址表三天前的数据*/
     public void deleteErrorCheckAddress() throws Exception{
         if(isEnabled(DELETE_ERRORCHECK_ADDRESS)){
             LOGGER.info("---------ScheduleTask.java中deleteErrorCheckAddress方法执行调度,开始time={}",DateUtil.getYMDHMS());

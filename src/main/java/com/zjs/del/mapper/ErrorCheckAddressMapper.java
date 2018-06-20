@@ -7,6 +7,6 @@ package com.zjs.del.mapper;
  */
 public interface ErrorCheckAddressMapper {
 
-    /** 定时删除纠错地址表七天前的数据*/
+    /** 定时删除纠错地址表三天前的数据*/
     void delErrorCheckAddress();
 }
