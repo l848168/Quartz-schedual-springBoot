@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zjs.del.mapper.ScheduletaskListenerMapper" >
+
+    <resultMap id="BaseResultMap" type="com.zjs.del.model.dto.ScheduletaskListenerDTO" >
+        <result column="ID" 			property="id" jdbcType="INTEGER" />
+        <result column="LAST_EXECUTE_DATE" property="lastExecuteDate" jdbcType="TIMESTAMP"/>
+        <result column="STATUS"          property="status" jdbcType="VARCHAR" />
+        <result column="CODE"          property="code" jdbcType="VARCHAR" />
+        <result column="NAME"          property="name" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+		ID,LAST_EXECUTE_DATE,STATUS,CODE,NAME
+    </sql>
+    <sql id="table_name">FD_SCHEDULETASK_LISTENER</sql>
+
+    <update id="updateByCode" parameterType="map">
+        UPDATE <include refid="table_name"></include>
+        SET LAST_EXECUTE_DATE=#{date, jdbcType=VARCHAR}
+        WHERE CODE = #{code, jdbcType=VARCHAR}
+    </update>
+
+    <select id="queryByDTO" parameterType="map" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List"></include>
+        FROM <include refid="table_name"></include>
+        <where>
+            <if test="id != null and id != '' ">
+                AND ID = #{id, jdbcType=DECIMAL}
+            </if>
+            <if test="code != null and code != '' ">
+                AND CODE = #{code, jdbcType=VARCHAR}
+            </if>
+        </where>
+    </select>
+
+</mapper>

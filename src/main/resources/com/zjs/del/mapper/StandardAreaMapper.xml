@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zjs.del.mapper.StandardAreaMapper" >
+    <resultMap id="BaseResultMap" type="com.zjs.del.model.dto.StandardAreaDTO" >
+        <id column="addressid" property="addressid" jdbcType="DECIMAL" />
+        <result column="parentid" property="parentid" jdbcType="DECIMAL" />
+        <result column="shortname" property="shortname" jdbcType="VARCHAR" />
+        <result column="areaname" property="areaname" jdbcType="VARCHAR" />
+        <result column="fullname" property="fullname" jdbcType="VARCHAR" />
+        <result column="arealevel" property="level" jdbcType="DECIMAL" />
+        <result column="fullshort" property="fullShort" jdbcType="VARCHAR" />
+
+        <result column="isChecked" property="isChecked" jdbcType="DECIMAL" />
+        <result column="areacode" property="areacode" jdbcType="VARCHAR" />
+        <result column="pkregion" property="pkregion" jdbcType="VARCHAR" />
+        <result column="creator" property="creator" jdbcType="VARCHAR"/>
+        <result column="creation_time" property="creationTime" jdbcType="TIMESTAMP"/>
+        <result column="modifier" property="modifier" jdbcType="VARCHAR"/>
+        <result column="last_modify_time" property="lastModifyTime" jdbcType="TIMESTAMP"/>
+        <result column="oper_time" property="operTime" jdbcType="TIMESTAMP"/>
+        <result column="ts" property="ts" jdbcType="VARCHAR"/>
+    </resultMap>
+
+
+    <delete id="deleteByFullname" parameterType="string">
+  		DELETE FROM STANDARDAREA
+  		WHERE FULLNAME = #{fullname, jdbcType=VARCHAR}
+  </delete>
+
+</mapper>

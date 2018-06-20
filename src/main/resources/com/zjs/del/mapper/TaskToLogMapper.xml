@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zjs.del.mapper.TaskToLogMapper" >
+
+    <delete id="deleteTaskToLog">
+         DELETE FROM TASK_TO_LOG t
+        WHERE to_char(t.RESPONSE_TIME,'yyyy-MM-dd')   &lt;  to_char(add_months(sysdate,-3),'yyyy-MM-dd')
+    </delete>
+
+</mapper>
