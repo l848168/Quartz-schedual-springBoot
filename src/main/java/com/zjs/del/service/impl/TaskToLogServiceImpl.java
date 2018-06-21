@@ -25,11 +25,10 @@ public class TaskToLogServiceImpl implements TaskToLogService {
 
     /** 定时删除三个月前的任务日志记录 */
     @Override
-    @Transactional(rollbackOn = {Exception.class})
     public void deleteTaskToLogs() {
         try {
             taskToLogMapper.deleteTaskToLog();
-        }catch (Exception e){
+        }catch (Exception e) {
             LOGGER.error("删除三个月前任务日志数据失败！" + ExceptionUtils.getStackTrace(e));
         }
     }

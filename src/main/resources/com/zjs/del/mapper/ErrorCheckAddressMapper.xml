@@ -4,8 +4,21 @@
 
 
     <delete id="delErrorCheckAddress" >
-        DELETE FROM FD_ERRORCHECK_ADDRESS t
-        WHERE to_char(t.SIGNTIME,'yyyy-MM-dd')   &lt;=  to_char(sysdate-4,'yyyy-MM-dd')
+        DELETE
+        FROM
+        FD_ERRORCHECK_ADDRESS
+        WHERE
+        ID IN (
+        SELECT
+        ID
+        FROM
+        FD_ERRORCHECK_ADDRESS t
+        WHERE
+        TO_CHAR ( t.SIGNTIME, 'yyyy-MM-dd' ) &lt;= TO_CHAR ( SYSDATE - 4, 'yyyy-MM-dd' )
+        AND ROWNUM &lt;
+        501
+        )
+
     </delete>
 
 </mapper>

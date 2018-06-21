@@ -3,8 +3,21 @@
 <mapper namespace="com.zjs.del.mapper.TaskToLogMapper" >
 
     <delete id="deleteTaskToLog">
-         DELETE FROM TASK_TO_LOG t
-        WHERE to_char(t.RESPONSE_TIME,'yyyy-MM-dd')   &lt;  to_char(add_months(sysdate,-3),'yyyy-MM-dd')
+         DELETE
+            FROM
+                TASK_TO_LOG
+            WHERE
+                ID IN (
+            SELECT
+                ID
+            FROM
+                TASK_TO_LOG t
+            WHERE
+                TO_CHAR ( t.RESPONSE_TIME, 'yyyy-MM-dd' ) &lt;
+            TO_CHAR ( ADD_MONTHS ( SYSDATE,- 3 ), 'yyyy-MM-dd' )
+            AND ROWNUM &lt;
+            501
+            )
     </delete>
 
 </mapper>
