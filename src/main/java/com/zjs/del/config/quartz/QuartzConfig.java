@@ -3,12 +3,14 @@ package com.zjs.del.config.quartz;
 import com.zjs.del.schedule.ScheduleTask;
 import org.quartz.JobDetail;
 import org.quartz.Trigger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.scheduling.quartz.CronTriggerFactoryBean;
 import org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean;
 import org.springframework.scheduling.quartz.SchedulerFactoryBean;
 import org.springframework.scheduling.quartz.SimpleTriggerFactoryBean;
+
+import javax.annotation.Resource;
 
 /**
  * @Author: Liwh
@@ -19,7 +21,7 @@ import org.springframework.scheduling.quartz.SimpleTriggerFactoryBean;
 public class QuartzConfig {
 
 
-    @Autowired
+    @Resource
     private ScheduleTask scheduleTask;
 
     /**
@@ -72,6 +74,7 @@ public class QuartzConfig {
 
     /**
      *   配置触发器1
+     *   @param firstJobDetail
      *   @return
      */
     @Bean(name="firstTrigger")
@@ -89,6 +92,7 @@ public class QuartzConfig {
 
     /**
      *   配置触发器2
+     *   @param secondJobDetail
      *   @return
      */
     @Bean(name="secondTrigger")
@@ -104,21 +108,19 @@ public class QuartzConfig {
         return simpleBean;
     }
 
+
     /**
-     *   配置触发器3
-     *   @return
+     *  配置触发器3,配置触发器cron形式
+     * @param thirdJobDetail
+     * @return
      */
-    @Bean(name="thirdTrigger")
-    public SimpleTriggerFactoryBean thirdTrigger(JobDetail thirdJobDetail){
-        SimpleTriggerFactoryBean simpleBean = new SimpleTriggerFactoryBean();
-        simpleBean.setJobDetail(thirdJobDetail);
-        // 设置任务启动延迟
-        simpleBean.setStartDelay(1000);
-        // 每1秒执行一次
-        simpleBean.setRepeatInterval(1002);
-        //设置重复计数
-        //simpleBean.setRepeatCount(0);
-        return simpleBean;
+    @Bean(name = "thirdTrigger")
+    public CronTriggerFactoryBean thirdTrigger(JobDetail thirdJobDetail) {
+        CronTriggerFactoryBean trigger = new CronTriggerFactoryBean();
+        trigger.setJobDetail(thirdJobDetail);
+        // cron表达式
+        trigger.setCronExpression("0 0 4 4 * ?");
+        return trigger;
     }
 
     /**
@@ -132,17 +134,5 @@ public class QuartzConfig {
     }
 
 
-    /**
-     *  配置触发器cron形式
-     * @param secondJobDetail
-     * @return
-     */
-    /*@Bean(name = "secondTrigger")
-    public CronTriggerFactoryBean secondTrigger(JobDetail secondJobDetail) {
-        CronTriggerFactoryBean trigger = new CronTriggerFactoryBean();
-        trigger.setJobDetail(secondJobDetail);
-        // cron表达式
-        trigger.setCronExpression("0 30 20 * * ?");
-        return trigger;
-    }*/
+
 }

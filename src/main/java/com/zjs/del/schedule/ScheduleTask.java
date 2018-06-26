@@ -9,9 +9,9 @@ import com.zjs.del.service.TaskToLogService;
 import com.zjs.del.utils.DateUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.Resource;
 import java.util.Date;
 import java.util.List;
 
@@ -33,13 +33,13 @@ public class ScheduleTask {
     private static final String DELETE_ERRORCHECK_ADDRESS="deleteErrorCheckAddress";
 
 
-    @Autowired
+    @Resource
     private StandAreaService standAreaService;
-    @Autowired
+    @Resource
     private ScheduletaskListenerService scheduletaskListenerService;
-    @Autowired
+    @Resource
     private TaskToLogService taskToLogService;
-    @Autowired
+    @Resource
     private ErrorCheckAddressService errorCheckAddressService;
 
 
