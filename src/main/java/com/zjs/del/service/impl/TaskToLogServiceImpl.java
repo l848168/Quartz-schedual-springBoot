@@ -2,17 +2,19 @@ package com.zjs.del.service.impl;
 
 import com.zjs.del.mapper.TaskToLogMapper;
 import com.zjs.del.service.TaskToLogService;
+import com.zjs.del.utils.PubUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * @Author: Liwh
  * @Date: 2018/6/13 17:49
- * @Description:
+ * @Description:任务日志impl
  */
 @Service
 public class TaskToLogServiceImpl implements TaskToLogService {
@@ -26,7 +28,10 @@ public class TaskToLogServiceImpl implements TaskToLogService {
     @Override
     public void deleteTaskToLogs() {
         try {
-            taskToLogMapper.deleteTaskToLog();
+            List<Integer> listIds = taskToLogMapper.listIds();
+            if (PubUtils.isNotNullAndNotEmpty(listIds)) {
+                taskToLogMapper.deleteTaskToLog();
+            }
         }catch (Exception e) {
             LOGGER.error("删除三个月前任务日志数据失败！" + ExceptionUtils.getStackTrace(e));
         }
