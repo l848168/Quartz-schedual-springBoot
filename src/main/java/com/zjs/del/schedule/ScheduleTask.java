@@ -62,7 +62,6 @@ public class ScheduleTask {
         if(isEnabled(DELETE_TASK_TO_LOG)){
             LOGGER.info("---------ScheduleTask.java中deleteTaskToLog方法执行调度,开始time={}",DateUtil.getYMDHMS());
             Long startTime = System.currentTimeMillis();
-            LOGGER.info("---------ScheduleTask.java中deleteTaskToLog方法执行调度,参数startCreated={}",DateUtil.getYMDHMS());
             taskToLogService.deleteTaskToLogs();
             scheduletaskListenerService.updateByCode(DELETE_TASK_TO_LOG, new Date());
             Long endTime = System.currentTimeMillis();
@@ -78,7 +77,6 @@ public class ScheduleTask {
         if(isEnabled(DELETE_ERRORCHECK_ADDRESS)){
             LOGGER.info("---------ScheduleTask.java中deleteErrorCheckAddress方法执行调度,开始time={}",DateUtil.getYMDHMS());
             Long startTime = System.currentTimeMillis();
-            LOGGER.info("---------ScheduleTask.java中deleteErrorCheckAddress方法执行调度,参数startCreated={}",DateUtil.getYMDHMS());
             errorCheckAddressService.delErrorCheckAddress();
             scheduletaskListenerService.updateByCode(DELETE_ERRORCHECK_ADDRESS, new Date());
             Long endTime = System.currentTimeMillis();

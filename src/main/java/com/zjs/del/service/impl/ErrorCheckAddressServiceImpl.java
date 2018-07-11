@@ -29,6 +29,7 @@ public class ErrorCheckAddressServiceImpl implements ErrorCheckAddressService {
         try {
             List<Integer> listIds = errorCheckAddressMapper.listIds();
             if (PubUtils.isNotNullAndNotEmpty(listIds)) {
+                LOGGER.info("本次删除 [纠错地址] 数量为:["+listIds.get(0)+"]条");
                 errorCheckAddressMapper.delErrorCheckAddress();
             }
         }catch (Exception e){

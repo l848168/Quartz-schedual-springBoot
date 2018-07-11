@@ -24,14 +24,13 @@
     <!--查询三个月之前的任务日志-->
     <select id="listIds" resultType="int">
         SELECT
-        ID
+        COUNT(ID)
         FROM
         TASK_TO_LOG t
         WHERE
         TO_CHAR ( t.RESPONSE_TIME, 'yyyy-MM-dd' ) &lt;
             TO_CHAR ( ADD_MONTHS ( SYSDATE,- 3 ), 'yyyy-MM-dd' )
-        AND ROWNUM &lt;
-        1
+        AND ROWNUM &lt; 501
     </select>
 
 </mapper>

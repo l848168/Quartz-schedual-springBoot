@@ -30,6 +30,7 @@ public class TaskToLogServiceImpl implements TaskToLogService {
         try {
             List<Integer> listIds = taskToLogMapper.listIds();
             if (PubUtils.isNotNullAndNotEmpty(listIds)) {
+                LOGGER.info("本次删除 [任务日志] 数量为:["+listIds.get(0)+"]条");
                 taskToLogMapper.deleteTaskToLog();
             }
         }catch (Exception e) {

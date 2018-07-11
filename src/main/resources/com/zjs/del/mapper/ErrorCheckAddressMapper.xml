@@ -24,13 +24,12 @@
     <!--查询三天之前的数据-->
     <select id="listIds" resultType="int">
         SELECT
-        ID
+        COUNT(ID)
         FROM
         FD_ERRORCHECK_ADDRESS t
         WHERE
         TO_CHAR ( t.SIGNTIME, 'yyyy-MM-dd' ) &lt;= TO_CHAR ( SYSDATE - 4, 'yyyy-MM-dd' )
-        AND ROWNUM &lt;
-        1
+        AND ROWNUM &lt; 501
     </select>
 
 </mapper>
