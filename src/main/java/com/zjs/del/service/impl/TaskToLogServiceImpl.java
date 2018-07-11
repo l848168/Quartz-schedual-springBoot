@@ -33,6 +33,7 @@ public class TaskToLogServiceImpl implements TaskToLogService {
                 LOGGER.info("本次删除 [任务日志] 数量为:["+listIds.get(0)+"]条");
                 taskToLogMapper.deleteTaskToLog();
             }
+            listIds = null;
         }catch (Exception e) {
             LOGGER.error("删除三个月前任务日志数据失败！" + ExceptionUtils.getStackTrace(e));
         }
