@@ -28,8 +28,8 @@
         <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
             <FileNamePattern>${log.path}/${log.name}_%d{yyyy-MM-dd}.%i.log</FileNamePattern>
             <maxHistory>2</maxHistory>
-            <maxFileSize>100MB</maxFileSize>
-            <totalSizeCap>2GB</totalSizeCap>
+            <maxFileSize>10MB</maxFileSize>
+            <totalSizeCap>1GB</totalSizeCap>
         </rollingPolicy>
     </appender>
     <appender name="ErrorFile" class="ch.qos.logback.core.rolling.RollingFileAppender">
@@ -47,8 +47,8 @@
         <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
             <FileNamePattern>${log.path}/${log.name.error}_%d{yyyy-MM-dd}.%i.log</FileNamePattern>
             <maxHistory>2</maxHistory>
-            <maxFileSize>100MB</maxFileSize>
-            <totalSizeCap>2GB</totalSizeCap>
+            <maxFileSize>10MB</maxFileSize>
+            <totalSizeCap>1GB</totalSizeCap>
         </rollingPolicy>
     </appender>
   <!--  <logger name="org.springframework" level="DEBUG"/>
