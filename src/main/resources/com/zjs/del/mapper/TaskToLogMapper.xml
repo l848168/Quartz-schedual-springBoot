@@ -4,21 +4,13 @@
 
     <!--删除三个月之前任务日志-->
     <delete id="deleteTaskToLog">
-         DELETE
+           DELETE
             FROM
-                TASK_TO_LOG
+            TASK_TO_LOG t
             WHERE
-                ID IN (
-            SELECT
-                ID
-            FROM
-                TASK_TO_LOG t
-            WHERE
-                TO_CHAR ( t.RESPONSE_TIME, 'yyyy-MM-dd' ) &lt;
-            TO_CHAR ( ADD_MONTHS ( SYSDATE,- 3 ), 'yyyy-MM-dd' )
-            AND ROWNUM &lt;
-            501
-            )
+            t.RESPONSE_TIME &lt; to_timestamp(
+            ADD_MONTHS( SYSDATE,- 3 ))
+            AND ROWNUM &lt; 501
     </delete>
 
     <!--查询三个月之前的任务日志-->
