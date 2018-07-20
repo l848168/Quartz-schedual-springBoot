@@ -4,32 +4,24 @@
 
     <!--删除纠错地址表三天前的数据-->
     <delete id="delErrorCheckAddress" >
-        DELETE
-        FROM
-        FD_ERRORCHECK_ADDRESS
-        WHERE
-        ID IN (
-        SELECT
-        ID
+        DELETE/*+rule*/
         FROM
         FD_ERRORCHECK_ADDRESS t
         WHERE
-        TO_CHAR ( t.SIGNTIME, 'yyyy-MM-dd' ) &lt;= TO_CHAR ( SYSDATE - 4, 'yyyy-MM-dd' )
-        AND ROWNUM &lt;
-        501
-        )
+        t.SIGNTIME &lt;= TO_TIMESTAMP(SYSDATE - 4)
+        AND ROWNUM &lt;501
 
     </delete>
 
     <!--查询三天之前的数据-->
     <select id="listIds" resultType="int">
-        SELECT
+        SELECT /*+rule*/
         COUNT(ID)
         FROM
         FD_ERRORCHECK_ADDRESS t
         WHERE
-        TO_CHAR ( t.SIGNTIME, 'yyyy-MM-dd' ) &lt;= TO_CHAR ( SYSDATE - 4, 'yyyy-MM-dd' )
-        AND ROWNUM &lt; 501
+        t.SIGNTIME &lt;= TO_TIMESTAMP(SYSDATE - 4)
+        AND ROWNUM &lt;501
     </select>
 
 </mapper>
