@@ -73,6 +73,21 @@ public class QuartzConfig {
     }
 
     /**
+     * 配置同步历史地址库数据定时任务
+     */
+    @Bean(name = "fourJobDetail")
+    public MethodInvokingJobDetailFactoryBean fourJobDetail(){
+        MethodInvokingJobDetailFactoryBean method = new MethodInvokingJobDetailFactoryBean();
+        // 为需要执行的实体类对应的对象
+        method.setTargetObject(scheduleTask);
+        // 需要执行的方法
+        method.setTargetMethod("syncHistAddr");
+        // 是否并发执行
+        method.setConcurrent(false);
+        return method;
+    }
+
+    /**
      *   配置触发器1
      *   @param firstJobDetail
      *   @return
@@ -124,12 +139,29 @@ public class QuartzConfig {
     }
 
     /**
+     * 配置触发器4
+     * @return
+     */
+    @Bean(name="fourTrigger")
+    public SimpleTriggerFactoryBean fourTrigger(JobDetail fourJobDetail){
+        SimpleTriggerFactoryBean simpleBean = new SimpleTriggerFactoryBean();
+        simpleBean.setJobDetail(fourJobDetail);
+        // 设置任务启动延迟
+        simpleBean.setStartDelay(1000);
+        // 每1秒执行一次
+        simpleBean.setRepeatInterval(1001);
+        //设置重复计数
+        //simpleBean.setRepeatCount(0);
+        return simpleBean;
+    }
+    /**
      *  配置Scheduler
      */
     @Bean(name = "scheduler")
-    public SchedulerFactoryBean schedulerFactoryBean(Trigger firstTrigger,Trigger secondTrigger,Trigger thirdTrigger){
+    public SchedulerFactoryBean schedulerFactoryBean(Trigger firstTrigger,Trigger secondTrigger,
+                                                     Trigger thirdTrigger,Trigger fourTrigger){
         SchedulerFactoryBean factoryBean = new SchedulerFactoryBean();
-        factoryBean.setTriggers(firstTrigger,secondTrigger,thirdTrigger);
+        factoryBean.setTriggers(firstTrigger,secondTrigger,thirdTrigger,fourTrigger);
         return factoryBean;
     }
 

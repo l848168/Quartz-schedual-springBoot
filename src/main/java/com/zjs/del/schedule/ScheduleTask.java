@@ -2,10 +2,7 @@ package com.zjs.del.schedule;
 
 import com.zjs.del.common.BaseResp;
 import com.zjs.del.model.entity.ScheduletaskListener;
-import com.zjs.del.service.ErrorCheckAddressService;
-import com.zjs.del.service.ScheduletaskListenerService;
-import com.zjs.del.service.StandAreaService;
-import com.zjs.del.service.TaskToLogService;
+import com.zjs.del.service.*;
 import com.zjs.del.utils.DateUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,12 +22,11 @@ public class ScheduleTask {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ScheduleTask.class);
 
-    private static final String NOAH_TS_MAX = "1991-01-01 01:01:01";
-
     private static final String SCHEDULETASK_FLG = "ENABLED";
     private static final String DELETE_STANDARDAREA_BYDR = "deleteStandardareaBydr";
     private static final String DELETE_TASK_TO_LOG="deleteTaskToLog";
     private static final String DELETE_ERRORCHECK_ADDRESS="deleteErrorCheckAddress";
+    private static final String SYNC_HIST_ADDR = "syncHistAddr";
 
 
     @Resource
@@ -41,12 +37,13 @@ public class ScheduleTask {
     private TaskToLogService taskToLogService;
     @Resource
     private ErrorCheckAddressService errorCheckAddressService;
-
+    @Resource
+    private MongoService mongoService;
 
     /** bosregion表中dr为1的定时从standardarea表中删除记录*/
     public void deleteStandardareaBydr() throws Exception{
         if(isEnabled(DELETE_STANDARDAREA_BYDR)){
-            LOGGER.info("---------ScheduleTask.java中deleteStandardareaBydr方法执行调度,开始time=" + DateUtil.getYMDHMS());
+            LOGGER.info("---------ScheduleTask.java中deleteStandardareaBydr方法执行调度,开始time={}" , DateUtil.getYMDHMS());
             long startTime = System.currentTimeMillis();
             standAreaService.deleteStandardareaBydr(DELETE_STANDARDAREA_BYDR);
             scheduletaskListenerService.updateByCode(DELETE_STANDARDAREA_BYDR, new Date());
@@ -85,13 +82,25 @@ public class ScheduleTask {
             LOGGER.info("=========deleteErrorCheckAddress对应的监听器状态为关闭状态或未设置监听器信息!");
         }
     }
+    /** 同步分单准确率中准确分单的地址到mongodb历史地址库中 */
+    public void syncHistAddr() throws Exception{
+        if(isEnabled(SYNC_HIST_ADDR)){
+            LOGGER.info("---------ScheduleTask.java中syncHistAddr方法执行调度,开始time={}",DateUtil.getYMDHMS());
+            Long startTime = System.currentTimeMillis();
+            mongoService.syncData();
+            Long endTime = System.currentTimeMillis();
+            LOGGER.info("---------ScheduleTask.java中syncHistAddr方法执行调度结束,耗时={}秒", (endTime - startTime) * 1.0/1000);
+        }else {
+            LOGGER.info("=========syncHistAddr对应的监听器状态为关闭状态或未设置监听器信息!");
+        }
+    }
 
 
     private boolean isEnabled(String code) throws Exception {
         BaseResp<List<ScheduletaskListener>> baseResp = scheduletaskListenerService.queryByIdAndCode(null, code);
 
         List<ScheduletaskListener> stlList = baseResp.getData();
-        if (stlList == null || stlList.size() == 0) {
+        if (stlList == null || stlList.isEmpty()) {
             LOGGER.error("根据{}查询出来的记录为空!", code);
             return false;
         } else if (stlList.size() > 1) {
