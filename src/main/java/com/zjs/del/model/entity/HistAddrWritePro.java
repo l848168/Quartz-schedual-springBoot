@@ -12,7 +12,7 @@ import java.util.Objects;
  * Description:历史地址属性实体类
  */
 @Data
-@Document(collection = "FD_HIST_ADDR")
+@Document(collection = "fd_hist_addr")
 public class HistAddrWritePro implements Serializable{
 
     private static final long serialVersionUID = -5602615846503471496L;

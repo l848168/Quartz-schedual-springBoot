@@ -88,6 +88,7 @@ public class ScheduleTask {
             LOGGER.info("---------ScheduleTask.java中syncHistAddr方法执行调度,开始time={}",DateUtil.getYMDHMS());
             Long startTime = System.currentTimeMillis();
             mongoService.syncData();
+            scheduletaskListenerService.updateByCode(SYNC_HIST_ADDR, new Date());
             Long endTime = System.currentTimeMillis();
             LOGGER.info("---------ScheduleTask.java中syncHistAddr方法执行调度结束,耗时={}秒", (endTime - startTime) * 1.0/1000);
         }else {
