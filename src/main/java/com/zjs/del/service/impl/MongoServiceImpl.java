@@ -74,7 +74,7 @@ public class MongoServiceImpl implements MongoService {
                 MongoCursor<String> collectionNames = database.listCollectionNames().iterator();
                 while (collectionNames.hasNext()) {
                     String collectionName = collectionNames.next();
-                    log.info("开始读取：{}的数据===============================", collectionName);
+                    log.info("开始读取：{}日，{}的数据===============================",databaseName, collectionName);
                     MongoCollection<Document> collection = database.getCollection(collectionName);
                     MongoCursor<Document> documents = collection.find(bson).iterator();
                     while (documents.hasNext()) {
@@ -113,7 +113,9 @@ public class MongoServiceImpl implements MongoService {
         } catch (Exception e) {
             log.error("出现异常：{}", ExceptionUtils.getStackTrace(e));
         }
-        log.warn("截止 {} 日，本次共存入了 {} 数据", DateUtil.getYMD(startTime), count);
+        if(count>0){
+            log.warn("截止 {} 日，本次共存入了 {} 数据", DateUtil.getYMD(startTime), count);
+        }
         count = 0;
     }
 
