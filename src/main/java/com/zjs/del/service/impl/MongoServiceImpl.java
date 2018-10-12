@@ -80,6 +80,7 @@ public class MongoServiceImpl implements MongoService {
                     while (documents.hasNext()) {
                         Document document = documents.next();
                         String address = (String) document.get("address");
+                        address = address.trim();
                         String tableName = HistAddrProvice.getTabName(collectionName);
                         HistAddrWritePro histAddr = new HistAddrWritePro();
                         try {
