@@ -15,7 +15,7 @@
 
     <!--查询三天之前的数据-->
     <select id="listIds" resultType="int">
-        SELECT /*+rule*/
+        SELECT
         COUNT(ID)
         FROM
         FD_ERRORCHECK_ADDRESS t
